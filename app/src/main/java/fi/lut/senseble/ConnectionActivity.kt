@@ -4,7 +4,9 @@ package fi.lut.senseble
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ListView
 import kotlinx.android.synthetic.main.activity_connection.*
 
 /**
@@ -33,11 +35,7 @@ class ConnectionActivity : AppCompatActivity(), ConnectionView {
         Log.d(TAG, "Initializing view")
         val scanBleDevicesButton = findViewById<Button>(R.id.scanBleDevicesButton)
         scanBleDevicesButton.setOnClickListener {
-            if (!connectionPresenter.bleScannerStatus) {
-                connectionPresenter.startBleDeviceScan()
-            } else {
-                connectionPresenter.stopBleDeviceScan()
-            }
+            connectionPresenter.BleDeviceScan()
         }
     }
 
@@ -47,6 +45,22 @@ class ConnectionActivity : AppCompatActivity(), ConnectionView {
         } else {
             scanBleDevicesButton.setText(resources.getString(R.string.ble_module_scan_on))
         }
+    }
+
+    override fun populateDeviceList(scanResults: ArrayList<String>) {
+        val arrayAdapter = ArrayAdapter<String>(this@ConnectionActivity, android.R.layout.simple_list_item_1, scanResults)
+        val bleDeviceList = findViewById<ListView>(R.id.ble_module_scan_results)
+        bleDeviceList.adapter = arrayAdapter
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        connectionPresenter.stopBleDeviceScan()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        connectionPresenter.stopBleDeviceScan()
     }
 
 }

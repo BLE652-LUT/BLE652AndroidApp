@@ -7,4 +7,6 @@ interface ConnectionView {
 
     fun setScanButtonText(bleScannerStatus: Boolean)
 
+    fun populateDeviceList(scanResults: ArrayList<String>)
+
 }
