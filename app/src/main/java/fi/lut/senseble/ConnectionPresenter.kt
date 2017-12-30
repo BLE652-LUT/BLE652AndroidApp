@@ -33,7 +33,7 @@ class ConnectionPresenter constructor(connectionView: ConnectionView, context: C
             var deviceAddress = result?.device?.address
             Log.d(TAG, "onScanResult(): ${deviceAddress} - ${deviceName} - ${deviceUuids}")
             if (!scanResults.contains("${deviceAddress} - ${deviceName} - ${deviceUuids}")) {
-                scanResults.add("${deviceAddress} - ${deviceName}")
+                scanResults.add("${deviceAddress} - ${deviceName} - ${deviceUuids}")
                 connectionView.populateDeviceList(scanResults)
             } else {
                 Log.d(TAG, "Device ${deviceAddress} - ${deviceName} - ${deviceUuids} already listed!")
