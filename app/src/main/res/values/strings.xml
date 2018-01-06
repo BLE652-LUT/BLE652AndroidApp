@@ -10,4 +10,6 @@
     <string name="button_status_connect">Connect</string>
     <string name="ble_module_scan_on">Stop Scan</string>
     <string name="ble_module_scan_off">Start Scan</string>
+    <string name="enable_bluetooth">Enable BT</string>
+    <string name="disable_bluetooth">Disable BT</string>
 </resources>

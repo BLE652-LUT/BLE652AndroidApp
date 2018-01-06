@@ -1,12 +1,13 @@
 package fi.lut.senseble
 
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.BluetoothLeScanner
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.util.Log
-import android.widget.ListView
+import android.os.Handler
 
 /**
  * Created by jessejuuti on 5.12.2017.
@@ -18,11 +19,15 @@ class ConnectionPresenter constructor(connectionView: ConnectionView, context: C
     private val context = context
     private var bleScannerStatus: Boolean = false
     private var scanResults: ArrayList<String> = ArrayList()
+    private lateinit var bluetoothAdapter: BluetoothAdapter
+    private lateinit var bluetoothManager: BluetoothManager
     private lateinit var bluetoothLeScanner: BluetoothLeScanner
 
+    private val scanPeriod: Long = 10000
+
     fun initializeBleAdapter() {
-        val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-        val bluetoothAdapter = bluetoothManager.adapter
+        bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        bluetoothAdapter = bluetoothManager.adapter
         bluetoothLeScanner = bluetoothAdapter.bluetoothLeScanner
     }
 
@@ -41,21 +46,42 @@ class ConnectionPresenter constructor(connectionView: ConnectionView, context: C
         }
     }
 
-    fun BleDeviceScan() {
+    fun clearScanResults() {
+        scanResults.clear()
+        connectionView.populateDeviceList(scanResults)
+    }
+
+    fun enableBluetooth() {
+        if (!bluetoothAdapter.isEnabled) {
+            bluetoothAdapter.enable()
+        }
+    }
+
+    fun disableBluetooth() {
+        if (bluetoothAdapter.isEnabled) {
+            bluetoothAdapter.disable()
+        }
+    }
+
+    fun bleDeviceScan() {
         if (bleScannerStatus) {
             stopBleDeviceScan()
         } else {
-            scanResults.clear()
+            clearScanResults()
             startBleDeviceScan()
         }
     }
 
     fun startBleDeviceScan() {
-        if (bleScannerStatus == false) {
-            bluetoothLeScanner.startScan(bleScanner)
-            bleScannerStatus = true
-            connectionView.setScanButtonText(bleScannerStatus)
+        enableBluetooth()
+        val handler = Handler()
+        val runnable = Runnable {
+            stopBleDeviceScan()
         }
+        handler.postDelayed(runnable, scanPeriod)
+        bleScannerStatus = true
+        bluetoothLeScanner.startScan(bleScanner)
+        connectionView.setScanButtonText(bleScannerStatus)
     }
 
     fun stopBleDeviceScan() {
