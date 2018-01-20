@@ -1,20 +1,20 @@
 package fi.lut.senseble
 
+import android.content.Context
+import fi.lut.senseble.bluetoothleservice.BluetoothLeService
 import android.util.Log
 import android.widget.Button
 
 /**
  * Created by jessejuuti on 4.12.2017.
  */
-class MainPresenter constructor(mainView: MainView){
+class MainPresenter constructor(private var mainView: MainView, private var context: Context){
 
     private val TAG: String = "MainPresenter"
-    private val mainView = mainView
-    private var bleModuleConnected = false
+    private lateinit var bluetoothLeService: BluetoothLeService
 
     fun connectDisconnectButtonClicked(buttonClicked: Button) {
-        if (checkIfBleModuleConnected()) {
-            bleModuleConnected = false
+        if (checkIfBleModuleConnected() == 1) {
             Log.d(TAG,"Disconnecting BLE Module")
         } else {
             mainView.openConnectionActivity()
@@ -23,7 +23,7 @@ class MainPresenter constructor(mainView: MainView){
     }
 
     fun menuButtonClicked(buttonClicked: Button) {
-        if (!checkIfBleModuleConnected()) {
+        if (checkIfBleModuleConnected() != 2) {
             mainView.showErrMsgModuleNotConnected()
             return
         } else {
@@ -31,7 +31,10 @@ class MainPresenter constructor(mainView: MainView){
         }
     }
 
-    fun checkIfBleModuleConnected(): Boolean {
-        return bleModuleConnected
+    fun checkIfBleModuleConnected(): Int {
+        bluetoothLeService = BluetoothLeService
+        Log.d(TAG, "Connection Status: ${bluetoothLeService.getConnectionStatus()}")
+        mainView.setConnectionStatus(bluetoothLeService.getConnectionStatus())
+        return bluetoothLeService.getConnectionStatus()
     }
 }

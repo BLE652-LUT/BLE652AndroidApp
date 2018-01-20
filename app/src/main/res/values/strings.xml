@@ -6,6 +6,9 @@
     <string name="module_status_button">BLE Module Status</string>
     <string name="noise_level_button">Noise Level Measurements</string>
     <string name="ble_module_not_connected">BLE module not connected!</string>
+    <string name="ble_module_status_disconnected">DISCONNECTED</string>
+    <string name="ble_module_status_connected">CONNECTED</string>
+    <string name="ble_module_status_connecting">CONNECTING</string>
     <string name="button_status_disconnect">Disconnect</string>
     <string name="button_status_connect">Connect</string>
     <string name="ble_module_scan_on">Stop Scan</string>

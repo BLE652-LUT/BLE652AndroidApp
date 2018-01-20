@@ -78,7 +78,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Disconnected"
+                    android:id="@+id/ble_module_connection_status"
+                    android:text="@string/ble_module_status_disconnected"
                     android:padding="5dp"
                     android:textColor="#ffffff" >
                 </TextView>

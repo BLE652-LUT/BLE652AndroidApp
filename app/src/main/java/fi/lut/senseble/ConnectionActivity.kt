@@ -1,5 +1,6 @@
 package fi.lut.senseble
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -59,7 +60,12 @@ class ConnectionActivity : AppCompatActivity(), ConnectionView {
         bleDeviceList.setOnItemClickListener{ adapterView: AdapterView<*>, view: View, itemPosition: Int, itemId: Long ->
             var module = arrayAdapter.getItem(itemPosition)
             Log.d(TAG, "ModuleClicked: ${module}")
+            connectionPresenter.initializeConnection(module.substring(0, 17))
         }
+    }
+    override fun openMainActivity() {
+        val mainActivityIntent = Intent(this, MainActivity::class.java)
+        startActivity(mainActivityIntent)
     }
 
     override fun onBackPressed() {
@@ -70,7 +76,6 @@ class ConnectionActivity : AppCompatActivity(), ConnectionView {
     override fun onDestroy() {
         super.onDestroy()
         connectionPresenter.stopBleDeviceScan()
-        connectionPresenter.disableBluetooth()
     }
 
 }

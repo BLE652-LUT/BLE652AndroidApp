@@ -1,6 +1,8 @@
 package fi.lut.senseble
 
+import fi.lut.senseble.bluetoothleservice.BluetoothLeService
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.BluetoothLeScanner
 import android.bluetooth.le.ScanCallback
@@ -12,16 +14,15 @@ import android.os.Handler
 /**
  * Created by jessejuuti on 5.12.2017.
  */
-class ConnectionPresenter constructor(connectionView: ConnectionView, context: Context){
+class ConnectionPresenter constructor(private var connectionView: ConnectionView, private var context: Context){
 
     private val TAG: String = "ConnectionPresenter"
-    private val connectionView = connectionView
-    private val context = context
     private var bleScannerStatus: Boolean = false
     private var scanResults: ArrayList<String> = ArrayList()
     private lateinit var bluetoothAdapter: BluetoothAdapter
     private lateinit var bluetoothManager: BluetoothManager
     private lateinit var bluetoothLeScanner: BluetoothLeScanner
+    private lateinit var bluetoothLeService: BluetoothLeService
 
     private val scanPeriod: Long = 10000
 
@@ -91,4 +92,13 @@ class ConnectionPresenter constructor(connectionView: ConnectionView, context: C
             connectionView.setScanButtonText(bleScannerStatus)
         }
     }
+
+    fun initializeConnection(deviceMacAddress:String) {
+        bluetoothLeService = BluetoothLeService
+        bluetoothLeService.initializeBleAdapter(context)
+        bluetoothLeService.connectBleDevice(deviceMacAddress, context)
+        stopBleDeviceScan()
+        connectionView.openMainActivity()
+    }
+
 }

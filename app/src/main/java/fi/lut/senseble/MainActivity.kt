@@ -1,14 +1,16 @@
 package fi.lut.senseble
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.Toast
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast.LENGTH_SHORT
 
-class MainActivity : Activity(), MainView {
+class MainActivity : AppCompatActivity(), MainView {
 
     private val TAG: String = "MainActivity"
     private lateinit var mainPresenter: MainPresenter
@@ -20,9 +22,14 @@ class MainActivity : Activity(), MainView {
         initializeViews()
     }
 
+    override fun onResume() {
+        mainPresenter.checkIfBleModuleConnected()
+        super.onResume()
+    }
+
     fun initializePresenter() {
         Log.d(TAG, "Initializing presenter")
-        mainPresenter = MainPresenter(this@MainActivity)
+        mainPresenter = MainPresenter(this@MainActivity, applicationContext)
     }
 
     fun initializeViews() {
@@ -32,7 +39,7 @@ class MainActivity : Activity(), MainView {
         val magneticFieldButton = findViewById<Button>(R.id.magnetic_field_button)
         val tempHumidButton = findViewById<Button>(R.id.temp_humid_button)
         val noiseLevelButton = findViewById<Button>(R.id.noise_level_button)
-        if (mainPresenter.checkIfBleModuleConnected()) {
+        if (mainPresenter.checkIfBleModuleConnected() == 2) {
             connectDisconnectButton.setText(resources.getString(R.string.button_status_disconnect))
             Log.d(TAG, "BLE Module connected!")
         } else {
@@ -59,6 +66,7 @@ class MainActivity : Activity(), MainView {
             mainPresenter.menuButtonClicked(noiseLevelButton)
             Log.d(TAG, "NoiseLevelButton clicked")
         }
+        mainPresenter.checkIfBleModuleConnected()
     }
 
     override fun showErrMsgModuleNotConnected() {
@@ -69,5 +77,16 @@ class MainActivity : Activity(), MainView {
     override fun openConnectionActivity() {
         val connectionActivityIntent = Intent(this, ConnectionActivity::class.java)
         startActivity(connectionActivityIntent)
+    }
+
+    override fun setConnectionStatus(connectionStatus: Int) {
+        var bleModuleConnectionStatus = findViewById<TextView>(R.id.ble_module_connection_status)
+        if (connectionStatus == 2) {
+            bleModuleConnectionStatus.setText(R.string.ble_module_status_connected)
+        } else if (connectionStatus == 1) {
+            bleModuleConnectionStatus.setText(R.string.ble_module_status_connecting)
+        } else {
+            bleModuleConnectionStatus.setText(R.string.ble_module_status_disconnected)
+        }
     }
 }

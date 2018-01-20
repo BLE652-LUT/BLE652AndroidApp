@@ -9,4 +9,6 @@ interface MainView {
 
     fun openConnectionActivity()
 
+    fun setConnectionStatus(connectionStatus: Int)
+
 }
