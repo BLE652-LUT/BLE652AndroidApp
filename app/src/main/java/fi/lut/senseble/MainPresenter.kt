@@ -24,6 +24,7 @@ class MainPresenter constructor(private var mainView: MainView, private var cont
 
     fun menuButtonClicked(buttonClicked: Button) {
         if (checkIfBleModuleConnected() != 2) {
+            Log.d(TAG,"${buttonClicked.id}")
             mainView.showErrMsgModuleNotConnected()
             return
         } else {
