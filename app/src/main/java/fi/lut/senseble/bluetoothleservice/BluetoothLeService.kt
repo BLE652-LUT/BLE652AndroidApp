@@ -68,8 +68,20 @@ object BluetoothLeService {
         mBluetoothGatt = mBleDevice.connectGatt(context, false, mBluetoothGattCallback)
     }
 
+    fun getBleDeviceAddress(): String? {
+        return mBleDevice.address
+    }
+
+    fun getBleDeviceName(): String? {
+        return mBleDevice.name
+    }
+
     fun getConnectionStatus(): Int {
         return mConnectionStatus
+    }
+
+    fun getDiscoveredServices(): Int? {
+        return mBluetoothGatt.services.size
     }
 
     private object mBluetoothGattCallback : BluetoothGattCallback() {
@@ -92,10 +104,6 @@ object BluetoothLeService {
         override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 Log.d(TAG, "onServicesDiscovered status: ${status} and services discovered: ${mBluetoothGatt.services.size}")
-                connectToMagnetoMeterService()
-                connectToTemperatureService()
-                connectToNoiseService()
-                connectToRSSIService()
             } else {
                 Log.d(TAG, "onServicesDiscovered status: ${status}")
             }
@@ -103,14 +111,6 @@ object BluetoothLeService {
         }
 
         override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic?) {
-            connectToMagnetoMeterService()
-            connectToTemperatureService()
-            connectToNoiseService()
-            connectToRSSIService()
-            readTemperatureServiceValues()
-            readMagnetoMeterServiceValues()
-            readNoiseServiceValues()
-            readRssiServiceValues()
             super.onCharacteristicChanged(gatt, characteristic)
         }
 
@@ -125,7 +125,7 @@ object BluetoothLeService {
         }
     }
 
-    private fun connectToMagnetoMeterService() {
+    fun connectToMagnetoMeterServiceX() {
         mMagnetoMeterService = mBluetoothGatt.getService(UUID.fromString(MAGN_SERVICE_UUID_STRING))
         if (!mMagnetoMeterXConnected) {
             mMagnetoMeterCharacteristicX = mMagnetoMeterService.characteristics[0]
@@ -136,7 +136,10 @@ object BluetoothLeService {
             mMagnetoMeterXConnected = mBluetoothGatt.writeDescriptor(mMagnetoMeterDescriptorX)
             Log.d(TAG, "mMagnetoMeterXConnected: ${mMagnetoMeterXConnected}")
         }
+    }
 
+    fun connectToMagnetoMeterServiceY() {
+        mMagnetoMeterService = mBluetoothGatt.getService(UUID.fromString(MAGN_SERVICE_UUID_STRING))
         if (!mMagnetoMeterYConnected) {
             mMagnetoMeterCharacteristicY = mMagnetoMeterService.characteristics[1]
             Log.d(TAG, "Magnetometer Service Characteristics Y: ${mMagnetoMeterCharacteristicY}")
@@ -146,7 +149,10 @@ object BluetoothLeService {
             mMagnetoMeterYConnected = mBluetoothGatt.writeDescriptor(mMagnetoMeterDescriptorY)
             Log.d(TAG, "mMagnetoMeterYConnected: ${mMagnetoMeterYConnected}")
         }
+    }
 
+    fun connectToMagnetoMeterServiceZ() {
+        mMagnetoMeterService = mBluetoothGatt.getService(UUID.fromString(MAGN_SERVICE_UUID_STRING))
         if (!mMagnetoMeterZConnected) {
             mMagnetoMeterCharacteristicZ = mMagnetoMeterService.characteristics[2]
             Log.d(TAG, "Magnetometer Service Characteristics Z: ${mMagnetoMeterCharacteristicZ}")
@@ -156,7 +162,10 @@ object BluetoothLeService {
             mMagnetoMeterZConnected = mBluetoothGatt.writeDescriptor(mMagnetoMeterDescriptorZ)
             Log.d(TAG, "mMagnetoMeterZConnected: ${mMagnetoMeterZConnected}")
         }
+    }
 
+    fun connectToMagnetoMeterServiceTotal() {
+        mMagnetoMeterService = mBluetoothGatt.getService(UUID.fromString(MAGN_SERVICE_UUID_STRING))
         if (!mMagnetoMeterTotalConnected) {
             mMagnetoMeterCharacteristicTotal = mMagnetoMeterService.characteristics[3]
             Log.d(TAG, "Magnetometer Service Characteristics Total: ${mMagnetoMeterCharacteristicTotal}")
@@ -168,7 +177,7 @@ object BluetoothLeService {
         }
     }
 
-    private fun connectToTemperatureService() {
+    fun connectToTemperatureService() {
         mTemperatureHumidityService = mBluetoothGatt.getService(UUID.fromString(TEMP_SERVICE_UUID_STRING))
         if (!mTemperatureHumidityServiceConnected) {
             mTemperatureHumidityCharacteristic = mTemperatureHumidityService.characteristics[0]
@@ -180,7 +189,7 @@ object BluetoothLeService {
         }
     }
 
-    private fun connectToNoiseService() {
+    fun connectToNoiseService() {
         mNoiseService = mBluetoothGatt.getService(UUID.fromString(NOISE_SERVICE_UUID_STRING))
         if (!mNoiseServiceConnected) {
             mNoiseServiceCharacteristic = mNoiseService.characteristics[0]
@@ -192,7 +201,7 @@ object BluetoothLeService {
         }
     }
 
-    private fun connectToRSSIService() {
+    fun connectToRSSIService() {
         mRssiService = mBluetoothGatt.getService(UUID.fromString(RSSI_SERVICE_UUID_STRING))
         if (!mRssiServiceConnected) {
             mRssiServiceCharacteristic = mRssiService.characteristics[0]
@@ -204,32 +213,26 @@ object BluetoothLeService {
         }
     }
 
-    private fun readMagnetoMeterServiceValues() {
-        try {
-
-            if (mMagnetoMeterXConnected) {
+    fun readMagnetoMeterServiceValues(): Array<Int>? {
+        if (mMagnetoMeterXConnected && mMagnetoMeterYConnected && mMagnetoMeterZConnected && mMagnetoMeterTotalConnected) {
+            try {
                 val mMagnXValue = byteArrayToValueConversion(mMagnetoMeterCharacteristicX.value)
                 Log.d(TAG, "mMagnXValue: ${mMagnXValue}")
-            }
-            if (mMagnetoMeterYConnected) {
                 val mMagnYValue = byteArrayToValueConversion(mMagnetoMeterCharacteristicY.value)
                 Log.d(TAG, "mMagnYValue: ${mMagnYValue}")
-            }
-            if (mMagnetoMeterZConnected) {
                 val mMagnZValue = byteArrayToValueConversion(mMagnetoMeterCharacteristicZ.value)
                 Log.d(TAG, "mMagnZValue: ${mMagnZValue}")
-            }
-            if (mMagnetoMeterTotalConnected) {
                 val mMagnTotalValue = byteArrayToValueConversion(mMagnetoMeterCharacteristicTotal.value)
                 Log.d(TAG, "mMagnTotalValue: ${mMagnTotalValue}")
+                return arrayOf(mMagnXValue, mMagnYValue, mMagnZValue, mMagnTotalValue)
+            } catch (e: IllegalStateException) {
+                Log.d(TAG, "Not all values were ready yet!")
             }
-
-        } catch (e: IllegalStateException) {
-            Log.d(TAG, "Not all values were ready yet!")
         }
+        return null
     }
 
-    private fun readTemperatureServiceValues() {
+    fun readTemperatureServiceValues() {
         try {
 
             if (mTemperatureHumidityServiceConnected) {
@@ -243,7 +246,7 @@ object BluetoothLeService {
         }
     }
 
-    private fun readNoiseServiceValues() {
+    fun readNoiseServiceValues() {
         try {
 
             if (mNoiseServiceConnected) {
@@ -257,15 +260,17 @@ object BluetoothLeService {
         }
     }
 
-    private fun readRssiServiceValues() {
-        try {
-            if (mRssiServiceConnected) {
+    fun readRssiServiceValues(): Int? {
+        if (mRssiServiceConnected) {
+            try {
                 val mRssiValue = byteArrayToValueConversion(mRssiServiceCharacteristic.value)
                 Log.d(TAG, "mRssiValue: ${mRssiValue}")
+                return mRssiValue
+            } catch (e: IllegalStateException) {
+                Log.d(TAG, "Not all values were ready yet!")
             }
-        } catch (e: IllegalStateException) {
-            Log.d(TAG, "Not all values were ready yet!")
         }
+        return null
     }
 
     private fun byteArrayToValueConversion(mByteArray: ByteArray): Int {

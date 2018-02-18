@@ -2,7 +2,6 @@ package fi.lut.senseble
 
 import fi.lut.senseble.bluetoothleservice.BluetoothLeService
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.BluetoothLeScanner
 import android.bluetooth.le.ScanCallback
@@ -24,7 +23,7 @@ class ConnectionPresenter constructor(private var connectionView: ConnectionView
     private lateinit var bluetoothLeScanner: BluetoothLeScanner
     private lateinit var bluetoothLeService: BluetoothLeService
 
-    private val scanPeriod: Long = 10000
+    private val scanPeriod: Long = 15000
 
     fun initializeBleAdapter() {
         bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager

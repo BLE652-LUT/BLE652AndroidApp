@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">SenseBLE</string>
     <string name="activity_connection_title">Connectivity</string>
+    <string name="activity_module_status_title">BLE Module Status</string>
+    <string name="activity_noise_level_title">Noise Level</string>
+    <string name="activity_temp_humid_title">Temperature &amp; Humidity</string>
+    <string name="activity_magn_field_title">Magnetic Field</string>
     <string name="magnetic_field_button">Magnetic Field Measurements</string>
     <string name="temp_humid_button">Temperature &amp; Humidity Measurements</string>
     <string name="module_status_button">BLE Module Status</string>
@@ -15,4 +19,14 @@
     <string name="ble_module_scan_off">Start Scan</string>
     <string name="enable_bluetooth">Enable BT</string>
     <string name="disable_bluetooth">Disable BT</string>
+    <string name="default_data_value_na">N/A</string>
+    <string name="textview_title_device_name">Device Name:</string>
+    <string name="textview_title_device_address">Device Address:</string>
+    <string name="textview_title_signal_level">Signal Strength:</string>
+    <string name="textview_title_battery_level">Battery Level:</string>
+    <string name="textview_title_discovered_services">Discovered Services:</string>
+    <string name="textview_title_magnetic_X_axis">X Axis Value:</string>
+    <string name="textview_title_magnetic_Y_axis">Y Axis Value:</string>
+    <string name="textview_title_magnetic_Z_axis">Z Axis Value:</string>
+    <string name="textview_title_magnetic_total">Total Value:</string>
 </resources>

@@ -22,6 +22,22 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>
+        <activity android:name=".MagneticFieldActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".ModuleStatusActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".TemperatureHumidityActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".NoiseActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
 
     </application>
     <uses-permission android:name="android.permission.BLUETOOTH"/>

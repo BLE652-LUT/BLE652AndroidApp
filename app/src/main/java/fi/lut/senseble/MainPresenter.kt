@@ -32,6 +32,22 @@ class MainPresenter constructor(private var mainView: MainView, private var cont
         }
     }
 
+    fun bleModuleStatusButtonClicked() {
+        if (checkIfBleModuleConnected() == 2) {
+            mainView.openModuleStatusActivity()
+        } else {
+            Log.d(TAG, "BLE Module not connected!")
+        }
+    }
+
+    fun magneticFieldButtonClicked() {
+        if (checkIfBleModuleConnected() == 2) {
+            mainView.openMagneticFieldActivity()
+        } else {
+            Log.d(TAG, "BLE Module not connected!")
+        }
+    }
+
     fun checkIfBleModuleConnected(): Int {
         bluetoothLeService = BluetoothLeService
         Log.d(TAG, "Connection Status: ${bluetoothLeService.getConnectionStatus()}")

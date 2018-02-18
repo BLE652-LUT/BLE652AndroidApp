@@ -9,6 +9,10 @@ interface MainView {
 
     fun openConnectionActivity()
 
+    fun openModuleStatusActivity()
+
+    fun openMagneticFieldActivity()
+
     fun setConnectionStatus(connectionStatus: Int)
 
 }

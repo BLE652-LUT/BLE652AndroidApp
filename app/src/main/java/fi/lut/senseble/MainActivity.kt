@@ -27,12 +27,12 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     fun initializePresenter() {
-        Log.d(TAG, "Initializing presenter")
+        Log.d(TAG, "Initializing MainPresenter")
         mainPresenter = MainPresenter(this@MainActivity, applicationContext)
     }
 
     fun initializeViews() {
-        Log.d(TAG, "Initializing view")
+        Log.d(TAG, "Initializing MainView")
         val connectDisconnectButton = findViewById<Button>(R.id.connect_disconnect_button)
         val bleModuleStatusButton = findViewById<Button>(R.id.ble_module_button)
         val magneticFieldButton = findViewById<Button>(R.id.magnetic_field_button)
@@ -50,11 +50,11 @@ class MainActivity : AppCompatActivity(), MainView {
             Log.d(TAG, "ConnectDisconnectButton clicked")
         }
         bleModuleStatusButton.setOnClickListener {
-            mainPresenter.menuButtonClicked(bleModuleStatusButton)
+            mainPresenter.bleModuleStatusButtonClicked()
             Log.d(TAG, "BleModuleButton clicked")
         }
         magneticFieldButton.setOnClickListener {
-            mainPresenter.menuButtonClicked(magneticFieldButton)
+            mainPresenter.magneticFieldButtonClicked()
             Log.d(TAG, "MagneticFieldButton clicked")
         }
         tempHumidButton.setOnClickListener {
@@ -77,6 +77,17 @@ class MainActivity : AppCompatActivity(), MainView {
         val connectionActivityIntent = Intent(this, ConnectionActivity::class.java)
         startActivity(connectionActivityIntent)
     }
+
+    override fun openModuleStatusActivity() {
+        val moduleStatusActivityIntent = Intent(this, ModuleStatusActivity::class.java)
+        startActivity(moduleStatusActivityIntent)
+    }
+
+    override fun openMagneticFieldActivity() {
+        val magneticFieldActivity = Intent(this, MagneticFieldActivity::class.java)
+        startActivity(magneticFieldActivity)
+    }
+
 
     override fun setConnectionStatus(connectionStatus: Int) {
         var bleModuleConnectionStatus = findViewById<TextView>(R.id.ble_module_connection_status)

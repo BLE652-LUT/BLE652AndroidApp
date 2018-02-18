@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#424242">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentInsetStart="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/activity_magn_field_title"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp">
+
+                </TextView>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="160sp"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_title_magnetic_X_axis"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:id="@+id/textview_magnetic_X_axis">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/textview_magnetic_X_axis"
+                android:layout_marginStart="5dp"
+                android:text="@string/default_data_value_na"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:id="@+id/textview_magnetic_X_axis_data">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/textview_magnetic_Y_axis"
+                android:layout_width="160sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textview_magnetic_X_axis"
+                android:layout_marginTop="17dp"
+                android:text="@string/textview_title_magnetic_Y_axis"
+                android:textColor="#ffffff"
+                android:textSize="15sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/textview_magnetic_Y_axis_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textview_magnetic_Y_axis"
+                android:layout_alignStart="@+id/textview_magnetic_X_axis_data"
+                android:text="@string/default_data_value_na"
+                android:textColor="#ffffff"
+                android:textSize="15sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/textview_magnetic_Z_axis"
+                android:layout_width="160sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textview_magnetic_Y_axis"
+                android:layout_marginTop="17dp"
+                android:text="@string/textview_title_magnetic_Z_axis"
+                android:textColor="#ffffff"
+                android:textSize="15sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/textview_magnetic_Z_axis_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textview_magnetic_Z_axis"
+                android:layout_alignStart="@+id/textview_magnetic_Y_axis_data"
+                android:text="@string/default_data_value_na"
+                android:textColor="#ffffff"
+                android:textSize="15sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/textview_magnetic_total"
+                android:layout_width="160sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textview_magnetic_Z_axis"
+                android:layout_marginTop="17dp"
+                android:text="@string/textview_title_magnetic_total"
+                android:textColor="#ffffff"
+                android:textSize="15sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/textview_magnetic_total_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textview_magnetic_total"
+                android:layout_alignStart="@+id/textview_magnetic_Z_axis_data"
+                android:text="@string/default_data_value_na"
+                android:textColor="#ffffff"
+                android:textSize="15sp">
+
+            </TextView>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
+</android.support.constraint.ConstraintLayout>
