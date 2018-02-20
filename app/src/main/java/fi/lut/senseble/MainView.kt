@@ -13,6 +13,10 @@ interface MainView {
 
     fun openMagneticFieldActivity()
 
+    fun openTempHumidActivity()
+
+    fun openNoiseActivity()
+
     fun setConnectionStatus(connectionStatus: Int)
 
 }

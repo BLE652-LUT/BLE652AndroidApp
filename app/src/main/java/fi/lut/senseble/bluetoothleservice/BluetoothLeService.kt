@@ -68,6 +68,10 @@ object BluetoothLeService {
         mBluetoothGatt = mBleDevice.connectGatt(context, false, mBluetoothGattCallback)
     }
 
+    fun disconnectBleDevice() {
+        mBluetoothGatt.disconnect()
+    }
+
     fun getBleDeviceAddress(): String? {
         return mBleDevice.address
     }
@@ -232,32 +236,32 @@ object BluetoothLeService {
         return null
     }
 
-    fun readTemperatureServiceValues() {
-        try {
-
-            if (mTemperatureHumidityServiceConnected) {
+    fun readTemperatureServiceValues(): Float? {
+        if (mTemperatureHumidityServiceConnected) {
+            try {
                 val mTempValue = byteArrayToValueConversion(mTemperatureHumidityCharacteristic.value)
                 val mTempCelsius = (0.1 * mTempValue).toFloat()
                 Log.d(TAG, "mTempValue: ${mTempCelsius}")
+                return mTempCelsius
+            } catch (e: IllegalStateException) {
+                Log.d(TAG, "Not all values were ready yet!")
             }
-
-        } catch (e: IllegalStateException) {
-            Log.d(TAG, "Not all values were ready yet!")
         }
+        return null
     }
 
-    fun readNoiseServiceValues() {
-        try {
-
-            if (mNoiseServiceConnected) {
+    fun readNoiseServiceValues(): Float? {
+        if (mNoiseServiceConnected) {
+            try {
                 val mNoiseValue = byteArrayToValueConversion(mNoiseServiceCharacteristic.value)
-                val mNoiseValueDecibel = (20 * (Math.log10(mNoiseValue.toDouble() / 1000))) / -48
+                val mNoiseValueDecibel = ((20 * (Math.log10(mNoiseValue.toDouble() / 1000))) / -48).toFloat()
                 Log.d(TAG, "mNoiseValueDecibel: ${mNoiseValueDecibel}")
+                return mNoiseValueDecibel
+            } catch (e: IllegalStateException) {
+                Log.d(TAG, "Not all values were ready yet!")
             }
-
-        } catch (e: IllegalStateException) {
-            Log.d(TAG, "Not all values were ready yet!")
         }
+        return null
     }
 
     fun readRssiServiceValues(): Int? {

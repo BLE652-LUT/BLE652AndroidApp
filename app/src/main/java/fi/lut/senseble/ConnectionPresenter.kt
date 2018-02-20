@@ -13,7 +13,7 @@ import android.os.Handler
 /**
  * Created by jessejuuti on 5.12.2017.
  */
-class ConnectionPresenter constructor(private var connectionView: ConnectionView, private var context: Context){
+class ConnectionPresenter constructor(private val connectionView: ConnectionView, private var context: Context){
 
     private val TAG: String = "ConnectionPresenter"
     private var bleScannerStatus: Boolean = false

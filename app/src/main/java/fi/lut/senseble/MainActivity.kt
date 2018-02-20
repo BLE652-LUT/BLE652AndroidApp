@@ -1,6 +1,7 @@
 package fi.lut.senseble
 
 import android.content.Intent
+import android.graphics.Color.*
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
@@ -13,6 +14,11 @@ class MainActivity : AppCompatActivity(), MainView {
 
     private val TAG: String = "MainActivity"
     private lateinit var mainPresenter: MainPresenter
+    private lateinit var connectDisconnectButton: Button
+    private lateinit var bleModuleStatusButton: Button
+    private lateinit var magneticFieldButton: Button
+    private lateinit var tempHumidButton: Button
+    private lateinit var noiseLevelButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,25 +34,19 @@ class MainActivity : AppCompatActivity(), MainView {
 
     fun initializePresenter() {
         Log.d(TAG, "Initializing MainPresenter")
-        mainPresenter = MainPresenter(this@MainActivity, applicationContext)
+        mainPresenter = MainPresenter(this@MainActivity)
     }
 
     fun initializeViews() {
         Log.d(TAG, "Initializing MainView")
-        val connectDisconnectButton = findViewById<Button>(R.id.connect_disconnect_button)
-        val bleModuleStatusButton = findViewById<Button>(R.id.ble_module_button)
-        val magneticFieldButton = findViewById<Button>(R.id.magnetic_field_button)
-        val tempHumidButton = findViewById<Button>(R.id.temp_humid_button)
-        val noiseLevelButton = findViewById<Button>(R.id.noise_level_button)
-        if (mainPresenter.checkIfBleModuleConnected() == 2) {
-            connectDisconnectButton.setText(resources.getString(R.string.button_status_disconnect))
-            Log.d(TAG, "BLE Module connected!")
-        } else {
-            connectDisconnectButton.setText(resources.getString(R.string.button_status_connect))
-            Log.d(TAG, "BLE Module disconnected!")
-        }
+        noiseLevelButton = findViewById(R.id.noise_level_button)
+        tempHumidButton = findViewById(R.id.temp_humid_button)
+        magneticFieldButton = findViewById(R.id.magnetic_field_button)
+        bleModuleStatusButton = findViewById(R.id.ble_module_button)
+        connectDisconnectButton = findViewById(R.id.connect_disconnect_button)
+
         connectDisconnectButton.setOnClickListener {
-            mainPresenter.connectDisconnectButtonClicked(connectDisconnectButton)
+            mainPresenter.connectDisconnectButtonClicked()
             Log.d(TAG, "ConnectDisconnectButton clicked")
         }
         bleModuleStatusButton.setOnClickListener {
@@ -58,11 +58,11 @@ class MainActivity : AppCompatActivity(), MainView {
             Log.d(TAG, "MagneticFieldButton clicked")
         }
         tempHumidButton.setOnClickListener {
-            mainPresenter.menuButtonClicked(tempHumidButton)
+            mainPresenter.tempHumidButtonClicked()
             Log.d(TAG, "TempHumidButton clicked")
         }
         noiseLevelButton.setOnClickListener {
-            mainPresenter.menuButtonClicked(noiseLevelButton)
+            mainPresenter.noiseButtonClicked()
             Log.d(TAG, "NoiseLevelButton clicked")
         }
         mainPresenter.checkIfBleModuleConnected()
@@ -84,19 +84,33 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun openMagneticFieldActivity() {
-        val magneticFieldActivity = Intent(this, MagneticFieldActivity::class.java)
-        startActivity(magneticFieldActivity)
+        val magneticFieldActivityIntent = Intent(this, MagneticFieldActivity::class.java)
+        startActivity(magneticFieldActivityIntent)
     }
 
+    override fun openNoiseActivity() {
+        val noiseActivityIntent = Intent(this, NoiseActivity::class.java)
+        startActivity(noiseActivityIntent)
+    }
+
+    override fun openTempHumidActivity() {
+        val tempHumidActivityIntent = Intent(this, TemperatureHumidityActivity::class.java)
+        startActivity(tempHumidActivityIntent)
+    }
 
     override fun setConnectionStatus(connectionStatus: Int) {
-        var bleModuleConnectionStatus = findViewById<TextView>(R.id.ble_module_connection_status)
+        val bleModuleConnectionStatus = findViewById<TextView>(R.id.ble_module_connection_status)
         if (connectionStatus == 2) {
             bleModuleConnectionStatus.setText(R.string.ble_module_status_connected)
+            bleModuleConnectionStatus.setTextColor(GREEN)
+            connectDisconnectButton.setText(resources.getString(R.string.button_status_disconnect))
         } else if (connectionStatus == 1) {
             bleModuleConnectionStatus.setText(R.string.ble_module_status_connecting)
+            bleModuleConnectionStatus.setTextColor(YELLOW)
         } else {
             bleModuleConnectionStatus.setText(R.string.ble_module_status_disconnected)
+            bleModuleConnectionStatus.setTextColor(RED)
+            connectDisconnectButton.setText(resources.getString(R.string.button_status_connect))
         }
     }
 }

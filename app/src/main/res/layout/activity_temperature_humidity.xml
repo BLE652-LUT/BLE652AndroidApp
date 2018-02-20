@@ -42,119 +42,47 @@
             <TextView
                 android:layout_width="160sp"
                 android:layout_height="wrap_content"
-                android:text="@string/textview_title_device_name"
+                android:text="@string/textview_title_temperature_value"
                 android:textColor="#ffffff"
                 android:textSize="15sp"
-                android:id="@+id/textview_device_name">
+                android:id="@+id/textview_temperature_value">
 
             </TextView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/textview_device_name"
+                android:layout_toEndOf="@+id/textview_temperature_value"
                 android:layout_marginStart="5dp"
                 android:text="@string/default_data_value_na"
                 android:textColor="#ffffff"
                 android:textSize="15sp"
-                android:id="@+id/textview_device_name_data">
+                android:id="@+id/textview_temperature_value_data">
 
             </TextView>
 
             <TextView
-                android:id="@+id/textview_device_address"
                 android:layout_width="160sp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textview_device_name"
+                android:layout_below="@+id/textview_temperature_value"
                 android:layout_marginTop="17dp"
-                android:text="@string/textview_title_device_address"
+                android:text="Humidity (%)"
                 android:textColor="#ffffff"
-                android:textSize="15sp">
+                android:textSize="15sp"
+                android:id="@+id/textview_humidity_value">
 
             </TextView>
 
             <TextView
-                android:id="@+id/textview_device_address_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textview_device_address"
-                android:layout_alignStart="@+id/textview_device_name_data"
+                android:layout_alignBottom="@+id/textview_humidity_value"
+                android:layout_alignStart="@+id/textview_temperature_value_data"
                 android:text="@string/default_data_value_na"
                 android:textColor="#ffffff"
-                android:textSize="15sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/textview_signal_level"
-                android:layout_width="160sp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textview_device_address"
-                android:layout_marginTop="17dp"
-                android:text="@string/textview_title_signal_level"
-                android:textColor="#ffffff"
-                android:textSize="15sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/textview_signal_level_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textview_signal_level"
-                android:layout_alignStart="@+id/textview_device_address_data"
-                android:text="@string/default_data_value_na"
-                android:textColor="#ffffff"
-                android:textSize="15sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/textview_battery_level"
-                android:layout_width="160sp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textview_signal_level"
-                android:layout_marginTop="17dp"
-                android:text="@string/textview_title_battery_level"
-                android:textColor="#ffffff"
-                android:textSize="15sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/textview_battery_level_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textview_battery_level"
-                android:layout_alignStart="@+id/textview_signal_level_data"
-                android:text="@string/default_data_value_na"
-                android:textColor="#ffffff"
-                android:textSize="15sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/textview_services"
-                android:layout_width="160sp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textview_battery_level"
-                android:layout_marginTop="17dp"
-                android:text="@string/textview_title_discovered_services"
-                android:textColor="#ffffff"
-                android:textSize="15sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/textview_services_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textview_services"
-                android:layout_alignStart="@+id/textview_battery_level_data"
-                android:text="@string/default_data_value_na"
-                android:textColor="#ffffff"
-                android:textSize="15sp">
+                android:textSize="15sp"
+                android:id="@+id/textview_humidity_value_data">
 
             </TextView>
 

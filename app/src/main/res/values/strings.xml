@@ -29,4 +29,6 @@
     <string name="textview_title_magnetic_Y_axis">Y Axis Value:</string>
     <string name="textview_title_magnetic_Z_axis">Z Axis Value:</string>
     <string name="textview_title_magnetic_total">Total Value:</string>
+    <string name="textview_title_noise_value">Noise Value:</string>
+    <string name="textview_title_temperature_value">Temperature (Celsius):</string>
 </resources>

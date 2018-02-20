@@ -1,6 +1,5 @@
 package fi.lut.senseble
 
-import android.content.Context
 import fi.lut.senseble.bluetoothleservice.BluetoothLeService
 import android.util.Log
 import android.widget.Button
@@ -8,27 +7,18 @@ import android.widget.Button
 /**
  * Created by jessejuuti on 4.12.2017.
  */
-class MainPresenter constructor(private var mainView: MainView, private var context: Context){
+class MainPresenter constructor(private val mainView: MainView){
 
     private val TAG: String = "MainPresenter"
-    private lateinit var bluetoothLeService: BluetoothLeService
+    private val bluetoothLeService: BluetoothLeService = BluetoothLeService
 
-    fun connectDisconnectButtonClicked(buttonClicked: Button) {
-        if (checkIfBleModuleConnected() == 1) {
+    fun connectDisconnectButtonClicked() {
+        if (checkIfBleModuleConnected() == 2) {
             Log.d(TAG,"Disconnecting BLE Module")
+            bluetoothLeService.disconnectBleDevice()
         } else {
             mainView.openConnectionActivity()
             Log.d(TAG,"Opening connection activity!")
-        }
-    }
-
-    fun menuButtonClicked(buttonClicked: Button) {
-        if (checkIfBleModuleConnected() != 2) {
-            Log.d(TAG,"${buttonClicked.id}")
-            mainView.showErrMsgModuleNotConnected()
-            return
-        } else {
-            Log.d(TAG,"New intent should opened! ${buttonClicked}")
         }
     }
 
@@ -37,6 +27,7 @@ class MainPresenter constructor(private var mainView: MainView, private var cont
             mainView.openModuleStatusActivity()
         } else {
             Log.d(TAG, "BLE Module not connected!")
+            mainView.showErrMsgModuleNotConnected()
         }
     }
 
@@ -45,11 +36,29 @@ class MainPresenter constructor(private var mainView: MainView, private var cont
             mainView.openMagneticFieldActivity()
         } else {
             Log.d(TAG, "BLE Module not connected!")
+            mainView.showErrMsgModuleNotConnected()
+        }
+    }
+
+    fun tempHumidButtonClicked() {
+        if (checkIfBleModuleConnected() == 2) {
+            mainView.openTempHumidActivity()
+        } else {
+            Log.d(TAG, "BLE Module not connected!")
+            mainView.showErrMsgModuleNotConnected()
+        }
+    }
+
+    fun noiseButtonClicked() {
+        if (checkIfBleModuleConnected() == 2) {
+            mainView.openNoiseActivity()
+        } else {
+            Log.d(TAG, "BLE Module not connected!")
+            mainView.showErrMsgModuleNotConnected()
         }
     }
 
     fun checkIfBleModuleConnected(): Int {
-        bluetoothLeService = BluetoothLeService
         Log.d(TAG, "Connection Status: ${bluetoothLeService.getConnectionStatus()}")
         mainView.setConnectionStatus(bluetoothLeService.getConnectionStatus())
         return bluetoothLeService.getConnectionStatus()

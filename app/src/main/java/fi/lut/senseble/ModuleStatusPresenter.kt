@@ -7,7 +7,7 @@ import fi.lut.senseble.bluetoothleservice.BluetoothLeService
 /**
  * Created by jessejuuti on 18.2.2018.
  */
-class ModuleStatusPresenter constructor(private var moduleStatusView: ModuleStatusView) {
+class ModuleStatusPresenter constructor(private val moduleStatusView: ModuleStatusView) {
 
     private val TAG: String = "ModuleStatusPresenter"
     private val bluetoothLeService: BluetoothLeService = BluetoothLeService
@@ -22,10 +22,10 @@ class ModuleStatusPresenter constructor(private var moduleStatusView: ModuleStat
         val handler = Handler()
         val runnable = object: Runnable {
             override fun run() {
-                Log.d(TAG, "UI Updater running")
                 if (killSwitch) {
                     Log.d(TAG, "UI Updater killed")
                 } else {
+                    Log.d(TAG, "UI Updater running")
                     val deviceAddress = bluetoothLeService.getBleDeviceAddress()
                     val deviceName = bluetoothLeService.getBleDeviceName()
                     val signalStrength = bluetoothLeService.readRssiServiceValues()

@@ -7,7 +7,7 @@ import fi.lut.senseble.bluetoothleservice.BluetoothLeService
 /**
  * Created by jessejuuti on 18.2.2018.
  */
-class MagneticFieldPresenter constructor(private var magneticFieldView: MagneticFieldView) {
+class MagneticFieldPresenter constructor(private val magneticFieldView: MagneticFieldView) {
 
     private val TAG: String = "MagneticFieldPresenter"
     private val bluetoothLeService: BluetoothLeService = BluetoothLeService
@@ -25,10 +25,10 @@ class MagneticFieldPresenter constructor(private var magneticFieldView: Magnetic
         val handler = Handler()
         val runnable = object: Runnable {
             override fun run() {
-                Log.d(TAG, "UI Updater running")
                 if (killSwitch) {
                     Log.d(TAG, "UI Updater killed")
                 } else {
+                    Log.d(TAG, "UI Updater running")
                     bluetoothLeService.connectToMagnetoMeterServiceX()
                     bluetoothLeService.connectToMagnetoMeterServiceY()
                     bluetoothLeService.connectToMagnetoMeterServiceZ()
