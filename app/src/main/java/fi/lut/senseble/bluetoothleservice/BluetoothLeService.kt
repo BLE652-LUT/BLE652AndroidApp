@@ -70,6 +70,7 @@ object BluetoothLeService {
 
     fun disconnectBleDevice() {
         mBluetoothGatt.disconnect()
+        mConnectionStatus = STATE_DISCONNECTED
     }
 
     fun getBleDeviceAddress(): String? {

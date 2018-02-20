@@ -2,7 +2,6 @@ package fi.lut.senseble
 
 import fi.lut.senseble.bluetoothleservice.BluetoothLeService
 import android.util.Log
-import android.widget.Button
 
 /**
  * Created by jessejuuti on 4.12.2017.
@@ -16,6 +15,7 @@ class MainPresenter constructor(private val mainView: MainView){
         if (checkIfBleModuleConnected() == 2) {
             Log.d(TAG,"Disconnecting BLE Module")
             bluetoothLeService.disconnectBleDevice()
+            checkIfBleModuleConnected()
         } else {
             mainView.openConnectionActivity()
             Log.d(TAG,"Opening connection activity!")
